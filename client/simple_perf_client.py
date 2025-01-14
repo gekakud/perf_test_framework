@@ -58,6 +58,9 @@ def run_performance_test():
         {"endpoint": "/populate_random_100/", "method": "POST"},
         {"endpoint": "/populate_random_1000/", "method": "POST"},
         {"endpoint": "/fetch/", "method": "GET"},
+        {"endpoint": "/clear/", "method": "DELETE"},
+        {"endpoint": "/populate_random_1000/", "method": "POST"},
+        {"endpoint": "/fetch/", "method": "GET"},
         {"endpoint": "/clear/", "method": "DELETE"}
     ]
 

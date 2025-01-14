@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  postgres-service:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"  # Expose database port
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d testdb"]
+      interval: 1s
+      timeout: 2s
+      retries: 5
+    networks:
+      - app_network
+
+  server-python-service:
+    build:
+      context: ./server/python  # Path to the FastAPI server's Dockerfile
+    container_name: fastapi-server
+    ports:
+      - "8000:8000"  # Expose FastAPI server port
+    depends_on:
+      postgres-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
